@@ -14,7 +14,7 @@ const TextEditor = () => {
         <Editor
             height="100%"
             theme="vs-dark"
-            language="json"
+            language="markdown"
             value={codeText}
             onChange={(value) => dispatch(setCodeText(value!))}
             options={{
