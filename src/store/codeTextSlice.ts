@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState = {
-    codeText: 'Test Test',
+    codeText: '',
 };
 
 export const codeTextSlice = createSlice({
