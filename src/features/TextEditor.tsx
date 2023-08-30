@@ -9,12 +9,11 @@ const TextEditor = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const codeText = useSelector((state: any) => state.codeText.codeText);
     const dispatch = useDispatch();
-
     return (
         <Editor
             height="100%"
             theme="vs-dark"
-            language="markdown"
+            language="sql"
             value={codeText}
             onChange={(value) => dispatch(setCodeText(value!))}
             options={{
