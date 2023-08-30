@@ -1,10 +1,14 @@
 
 import Editor from '@monaco-editor/react';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { setCodeText } from '../store/codeTextSlice';
+import { setCodeText } from '../../store/codeTextSlice';
+import { useState } from 'react';
 
 const TextEditor = () => {
+
+    //? Maybe add more languages in the future
+    const [theme] = useState('vs-dark');
+    const [language] = useState('sql');
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const codeText = useSelector((state: any) => state.codeText.codeText);
@@ -12,8 +16,8 @@ const TextEditor = () => {
     return (
         <Editor
             height="100%"
-            theme="vs-dark"
-            language="sql"
+            theme={theme}
+            language={language}
             value={codeText}
             onChange={(value) => dispatch(setCodeText(value!))}
             options={{

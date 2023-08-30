@@ -61,8 +61,6 @@ CREATE TABLE OrderDetails (
     `,
 };
 
-
-
 export const codeTextSlice = createSlice({
     name: 'codeText',
     initialState,
