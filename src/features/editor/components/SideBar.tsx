@@ -1,13 +1,14 @@
+interface ISideBarProps {
+    extraClasses?: string
+}
 
-const SideBar = () => {
+const SideBar = ({ extraClasses }: ISideBarProps) => {
     return (
-        <div className='flex flex-col bg-zinc-900  text-white z-20'>
+        <div className={`flex flex-col bg-zinc-900  text-white z-20 ${extraClasses}`}>
             <button className='bg-primary hover:bg-primary-dark p-2'>
                 <p className='font-bold'>MIN</p>
             </button>
-
         </div>
-
     )
 }
 
