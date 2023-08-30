@@ -1,18 +1,19 @@
 import { useCallback, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import ReactFlow, {
-  MiniMap,
-  Controls,
   Background,
-  useNodesState,
-  useEdgesState,
+  Controls,
+  MiniMap,
   addEdge,
+  useEdgesState,
+  useNodesState,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
-import { initialEdges, initialNodes } from './initial';
-import { useSelector } from 'react-redux';
-import { parseSQLToNodesAndEdges } from './helpers/helpers';
+import { RootState } from '../../store/store';
 import SelfConnectingEdge from './components/SelfConnectingEdge';
 import TableNode from './components/TableNode';
+import { parseSQLToNodesAndEdges } from './helpers/helpers';
+import { initialEdges, initialNodes } from './initial';
 
 const edgeTypes = {
   selfconnecting: SelfConnectingEdge,
@@ -28,20 +29,15 @@ export default function App() {
 
    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onConnect = useCallback((params: any) => setEdges((eds: any) => addEdge(params, eds)), [setEdges]);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const codeText = useSelector((state: any) => state.codeText.codeText);
+  const codeText = useSelector((state: RootState) => state.codeText.codeText);
 
   useEffect(() => {
     if (!codeText) return;
     const { nodes: newNodes, edges: newEdges } = parseSQLToNodesAndEdges(codeText);
-
-    // Merge new nodes with existing ones while keeping the existing positions
     const updatedNodes = newNodes.map((newNode) => {
       const existingNode = nodes.find((n: { id: string; }) => n.id === newNode.id);
       return existingNode ? { ...newNode, position: existingNode.position } : newNode;
     });
-
-    // Merge new edges with existing ones
     const updatedEdges = [...edges, ...newEdges.filter((newEdge) => !edges.some((edge: { id: string; }) => edge.id === newEdge.id))];
 
     setNodes(updatedNodes);

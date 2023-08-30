@@ -28,7 +28,6 @@ export const TableNode = ({ data, isConnectable }: ITableNodeProps) => {
 
     const createTable = () => {
         if (!data.tableColumns) return null;
-
         return (
             <table className='w-full'>
                 <thead></thead>
@@ -63,9 +62,7 @@ export const TableNode = ({ data, isConnectable }: ITableNodeProps) => {
                 </div>
 
                 <div className='h-fit overflow-hidden'>
-                    {
-                        data.componentType === 'enum' ? createEnumTable() : createTable()
-                    }
+                    { data.componentType === 'enum' ? createEnumTable() : createTable() }
                 </div>
             </div>
             <Handle

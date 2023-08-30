@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState = {
+interface ICodeTextState {
+    codeText: string;
+}
+
+const initialState : ICodeTextState = {
     codeText: `
     -- Enums
 CREATE TYPE order_status AS ENUM ('Pending', 'Shipped', 'Cancelled', 'Delivered');

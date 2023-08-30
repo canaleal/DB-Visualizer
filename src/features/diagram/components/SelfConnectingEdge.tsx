@@ -1,7 +1,6 @@
 import { BaseEdge, BezierEdge, EdgeProps } from 'reactflow';
 
-export default function SelfConnecting(props: EdgeProps) {
-    // we are using the default bezier edge when source and target ids are different
+const SelfConnecting = (props: EdgeProps) => {
     if (props.source !== props.target) {
         return <BezierEdge {...props} />;
     }
@@ -14,3 +13,5 @@ export default function SelfConnecting(props: EdgeProps) {
 
     return <BaseEdge path={edgePath} markerEnd={markerEnd} />;
 }
+
+export default SelfConnecting;

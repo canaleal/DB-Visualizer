@@ -20,6 +20,17 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
+  "baseUrl": ".",
+    "paths": {
+      "@features/*": ["src/features/*"],
+      "@components/*": ["src/components/*"],
+      "@utils/*": ["src/utils/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@types/*": ["src/types/*"],
+      "@styles/*": ["src/styles/*"],
+      "@assets/*": ["src/assets/*"],
+      "@store/*": ["src/store/*"],
+    },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

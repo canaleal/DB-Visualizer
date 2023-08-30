@@ -1,7 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-//! Somewhat overkill to have a slice for this, but it's good practice
+import { LanguageType, ThemeType } from './types';
 
-const initialState = {
+interface ITextEditorState {
+    theme: ThemeType;
+    language: LanguageType;
+}
+
+const initialState: ITextEditorState = {
     theme: 'light',
     language: 'sql',
 };
@@ -10,13 +15,12 @@ export const textEditorSlice = createSlice({
     name: 'codeText',
     initialState,
     reducers: {
-        setTheme : (state, action: PayloadAction<string>) => {
+        setTheme: (state, action: PayloadAction<ThemeType>) => {
             state.theme = action.payload;
         },
-        setLanguage : (state, action: PayloadAction<string>) => {
+        setLanguage: (state, action: PayloadAction<LanguageType>) => {
             state.language = action.payload;
         }
-
     }
 });
 
