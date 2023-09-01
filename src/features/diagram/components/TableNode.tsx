@@ -47,7 +47,7 @@ export const TableNode = ({ data, isConnectable }: ITableNodeProps) => {
     }
 
     return (
-        <div className='min-w-[15rem] bg-white  rounded-lg overflow-hidden shadow-lg'>
+        <div className='min-w-[15rem] bg-white  overflow-hidden shadow-lg'>
             <Handle
                 type="target"
                 position={Position.Top}

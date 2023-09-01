@@ -4,14 +4,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCodeText } from '../../store/codeTextSlice';
 import { RootState } from '../../store/store';
 import SideBar from './components/SideBar';
+import monokai from './themes/monokai.json';
 
 const TextEditor = () => {
-
+   
     const codeText = useSelector((state: RootState) => state.codeText.codeText);
     const theme = useSelector((state: RootState) => state.textEditor.theme);
     const language = useSelector((state: RootState) => state.textEditor.language);
     const dispatch = useDispatch();
-    
+     
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    function handleEditorWillMount(monaco: any) {
+      monaco.editor.defineTheme('monokai', monokai);
+      monaco.editor.setTheme('monokai');
+    }
+  
     return (
         <div className='flex flex-row h-full w-full relative'>
             <SideBar />
@@ -31,6 +38,8 @@ const TextEditor = () => {
                     scrollBeyondLastLine: false,
                     automaticLayout: true,
                 }}
+                beforeMount={handleEditorWillMount}
+               
             />
         </div>
     )

@@ -7,7 +7,7 @@ interface ITextEditorState {
 }
 
 const initialState: ITextEditorState = {
-    theme: 'light',
+    theme: 'monokai',
     language: 'sql',
 };
 
