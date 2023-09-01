@@ -16,8 +16,8 @@ export const TableNode = ({ data, isConnectable }: ITableNodeProps) => {
                 <tbody>
                     {data.enumValues.map((value, index) => {
                         return (
-                            <tr key={index} className='bg-white hover:bg-slate-200'>
-                                <td className='text-xs px-2 py-1'>{value}</td>
+                            <tr key={index} className='bg-zinc-700 hover:bg-zinc-600 '>
+                                <td className='text-xs px-2 py-2 text-zinc-200'>{value}</td>
                             </tr>
                         )
                     })}
@@ -34,10 +34,10 @@ export const TableNode = ({ data, isConnectable }: ITableNodeProps) => {
                 <tbody>
                     {data.tableColumns.map((column, index) => {
                         return (
-                            <tr key={index} className='bg-white hover:bg-slate-200'>
-                                <td className='text-xs px-2 py-1'>{column.name}</td>
-                                <td className='text-xs px-2 py-1'>{column.type}</td>
-                                <td className='text-xs px-2 py-1'>{column.constraints}</td>
+                            <tr key={index} className='bg-zinc-700 hover:bg-zinc-600' >
+                                <td className='text-xs px-2 py-2 text-zinc-200'>{column.name}</td>
+                                <td className='text-xs px-2 py-2 text-zinc-400 text-right'>{column.type}</td>
+                              
                             </tr>
                         )
                     })}
@@ -47,7 +47,7 @@ export const TableNode = ({ data, isConnectable }: ITableNodeProps) => {
     }
 
     return (
-        <div className='min-w-[10rem] bg-white border-2 hover:border-black '>
+        <div className='min-w-[15rem] bg-white  rounded-lg overflow-hidden shadow-lg'>
             <Handle
                 type="target"
                 position={Position.Top}
@@ -56,9 +56,9 @@ export const TableNode = ({ data, isConnectable }: ITableNodeProps) => {
 
             />
             <div>
-                <div className={`w-full text-center ${data.componentType === 'enum' ? "bg-blue-600 text-white" : "bg-gray-200 text-black"}  px-2 py-1`}>
+                <div className={`w-full ${data.componentType === 'enum' ? "bg-blue-800 text-white" : "bg-zinc-900 text-white"}  px-2 py-2`}>
                     {data.componentType === 'enum' && <p className='text-xs'>{"<<enumeration>>"}</p>}
-                    <p>{data.label}</p>
+                    <p className='font-bold text-xs'>{data.label}</p>
                 </div>
 
                 <div className='h-fit overflow-hidden'>
