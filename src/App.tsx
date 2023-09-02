@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import IconArrowRight from './components/icons/IconArrowRight';
+import IconArrowRight from './components/icons/iconArrowRight';
 import IconArrowLeft from './components/icons/iconArrowLeft';
 import Diagram from './features/diagram/Diagram';
 import TextEditor from './features/editor/TextEditor';
