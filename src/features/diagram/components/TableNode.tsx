@@ -13,7 +13,7 @@ export const TableNode = ({ data, isConnectable }: ITableNodeProps) => {
         if (!data.enumValues) return null;
         return (
             <>
-                <div className={`w-full bg-blue-800 text-white px-2 py-2`}>
+                <div className={`w-full bg-indigo-800 text-white px-2 py-2`}>
                     <p className='text-xs'>{"<<enumeration>>"}</p>
                     <p className='font-bold text-xs'>{data.label}</p>
                 </div>
@@ -69,7 +69,7 @@ export const TableNode = ({ data, isConnectable }: ITableNodeProps) => {
 
             />
 
-            <div className='h-fit overflow-hidden'>
+            <div className='h-fit overflow-hidden rounded-md'>
                 {data.componentType === 'enum' ? createEnumTable() : createTable()}
             </div>
 

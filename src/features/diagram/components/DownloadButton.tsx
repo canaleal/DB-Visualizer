@@ -59,7 +59,7 @@ function DownloadButton() {
     return (
         <Panel position="top-right" className='flex flex-row gap-2'>
             <select
-                className='bg-zinc-900 hover:bg-zinc-800 p-2 text-white'
+                className='bg-zinc-900 hover:bg-zinc-800 p-2 text-white rounded-md'
                 value={selectedImageFormat}
                 onChange={(e) => setSelectedImageFormat(e.target.value)}
             >
@@ -70,7 +70,7 @@ function DownloadButton() {
                 ))}
             </select>
 
-            <button className="bg-blue-900 hover:bg-blue-800 p-2 text-white" onClick={onDownload}>
+            <button className="bg-indigo-900 hover:bg-indigo-800 p-2 text-white rounded-md" onClick={onDownload}>
                 <IconDownload fillColor='white' size={20} />
             </button>
 
