@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import dagre from 'dagre';
 import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import ReactFlow, {
@@ -11,11 +12,11 @@ import ReactFlow, {
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import { RootState } from '../../store/store';
+import DownloadButton from './components/DownloadButton';
 import SelfConnectingEdge from './components/SelfConnectingEdge';
 import TableNode from './components/TableNode';
 import { parseSQLToNodesAndEdges } from './helpers/helpers';
 import { initialEdges, initialNodes } from './initial';
-import dagre from 'dagre';
 
 const edgeTypes = {
   selfconnecting: SelfConnectingEdge,
@@ -65,8 +66,6 @@ const getLayoutedElements = (nodes: any[], edges: any[], direction = 'TB') => {
   return { nodes, edges };
 };
 
-
-
 const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
   initialNodes,
   initialEdges
@@ -113,6 +112,7 @@ export default function App() {
         <Controls />
         <MiniMap />
         <Background  gap={12} size={1} />
+        <DownloadButton />
       </ReactFlow>
     </div>
   );

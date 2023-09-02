@@ -47,30 +47,43 @@ const extractEnumInfo = (stmt: string) => {
     return { enumName, enumValues };
 };
 
-const extractTableInfo = (stmt: string) => {
+
+const extractTableInfo = (stmt: string): { tableName: string | null, tableColumns: ITableData[] } => {
     const tableNameMatch = stmt.match(/CREATE\s+TABLE\s+(\w+)/i);
     const tableName = tableNameMatch ? tableNameMatch[1] : null;
 
-    // Initialize an array to hold column information
     const tableColumns: ITableData[] = [];
 
-    // Extract the part of the statement that should contain column definitions
-    const columnsPartMatch = stmt.match(/CREATE\s+TABLE\s+\w+\s*\(([^)]+)\)/i);
+    const columnsPartMatch = stmt.match(/CREATE\s+TABLE\s+\w+\s*\(([\s\S]+)\)/i); // Adjusted to capture all characters
     const columnsPart = columnsPartMatch ? columnsPartMatch[1] : null;
 
     if (columnsPart) {
-        // Split the columnsPart string into lines based on commas, 
-        // assuming each column definition is separated by a comma
-        const columnLines = columnsPart.split(/,\s*(?![^()]*\))/); // Take care not to split nested parentheses
+        const columnLines: string[] = [];
+        let parenCount = 0;
+        let lastSplit = 0;
 
-        // Loop through each column definition line
+        for (let i = 0; i < columnsPart.length; i++) {
+            const char = columnsPart[i];
+            if (char === '(') {
+                parenCount++;
+            } else if (char === ')') {
+                parenCount--;
+            } else if (char === ',' && parenCount === 0) {
+                columnLines.push(columnsPart.substring(lastSplit, i).trim());
+                lastSplit = i + 1;
+            }
+        }
+
+        // Capture any remaining column data after the last comma
+        columnLines.push(columnsPart.substring(lastSplit).trim());
+
         for (const line of columnLines) {
-            const columnMatch = line.trim().match(/(\w+)\s+([\w\s]+)(?:\s+(.*))?/i); // This regex assumes that column names and types are alphanumeric
+            const columnMatch = line.trim().match(/(\w+)\s+([^,]+)(?:,|\s+(.*))?/i);
 
             if (columnMatch) {
                 const columnName = columnMatch[1];
-                const columnType = columnMatch[2].trim(); // Remove any extra spaces
-                const constraints = columnMatch[3] ? columnMatch[3].split(/\s+/) : []; // Split any remaining text into constraints
+                const columnType = columnMatch[2].trim();
+                const constraints = columnMatch[3] ? columnMatch[3].trim().split(/\s+/) : [];
 
                 tableColumns.push({
                     name: columnName,
@@ -83,6 +96,7 @@ const extractTableInfo = (stmt: string) => {
 
     return { tableName, tableColumns };
 };
+
 
 //! combine enum data and table data into one object
 function createNode(name: string, componentType: SQLType = 'table', nodeType: string = 'tableNode', enumData?: string[] , tableData?: ITableData[]): INode {

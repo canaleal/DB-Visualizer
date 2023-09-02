@@ -1,17 +1,24 @@
 import { BaseEdge, BezierEdge, EdgeProps } from 'reactflow';
 
 const SelfConnecting = (props: EdgeProps) => {
-    if (props.source !== props.target) {
-        return <BezierEdge {...props} />;
-    }
+  if (props.source !== props.target) {
+    return <BezierEdge {...props} />;
+  }
 
-    const { sourceX, sourceY, targetX, targetY, markerEnd } = props;
-    const radiusX = (sourceY - targetY) * 0.6;
-    const radiusY = 50;
-    const edgePath = `M ${sourceX} ${sourceY - 5} A ${radiusX + 10} ${radiusY + 25} 0 1 0 ${targetX + 2
-        } ${targetY}`;
+  const { sourceX, sourceY, targetX, targetY, markerEnd } = props;
 
-    return <BaseEdge path={edgePath} markerEnd={markerEnd} />;
-}
+  const midX = sourceX + 200;  // Adjust the offset as needed
+  const midY = sourceY - 230;  // Adjust the offset as needed
+
+  const edgePath = `
+    M ${sourceX} ${sourceY}
+    L ${midX} ${sourceY}
+    L ${midX} ${midY}
+    L ${targetX} ${midY}
+    L ${targetX} ${targetY}
+  `;
+
+  return <BaseEdge path={edgePath} markerEnd={markerEnd} />;
+};
 
 export default SelfConnecting;
