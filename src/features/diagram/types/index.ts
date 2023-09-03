@@ -12,8 +12,6 @@ export interface IEnumReference {
     sourceTable: string
 }
 
-
-
 export interface ISQLTableData {
     name: string, 
     type: string, 

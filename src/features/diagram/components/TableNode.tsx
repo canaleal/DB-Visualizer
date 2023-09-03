@@ -65,7 +65,7 @@ export const TableNode = ({ data, isConnectable }: ITableNodeProps) => {
                         {data.tableColumns.map((column, index) => {
                             return (
                                 <tr key={index} className='bg-zinc-700 hover:bg-zinc-600' >
-                                    <td className={`text-xs px-2 py-2 text-zinc-200 flex flex-row gap-1 ${index === 0 ? "font-bold" : ""}`}>{column.name} {(column.type.includes("PRIMARY") || column.type.includes("REFERENCES") ) && <IconKey fillColor='black' size={10} className='my-auto' />}</td>
+                                    <td className={`text-xs px-2 py-2 text-zinc-200 flex flex-row gap-1 ${index === 0 ? "font-bold" : ""}`}>{column.name} {column.type.includes("PRIMARY") && <IconKey fillColor='white' size={10} className='my-auto' />}</td>
                                     <td className={`text-xs px-2 py-2 text-zinc-400 text-right ${index === 0 ? "font-bold" : ""}`}>{column.type}</td>
                                 </tr>
                             )
@@ -86,13 +86,9 @@ export const TableNode = ({ data, isConnectable }: ITableNodeProps) => {
     }
 
     return (
-        <div className='min-w-[15rem] bg-white  overflow-hidden shadow-lg'>
+        <div className='min-w-[15rem] bg-white  overflow-hidden shadow-lg rounded-md'>
 
-
-            <div className='h-fit overflow-hidden rounded-md'>
-                {data.componentType === 'enum' ? createEnumTable() : createTable()}
-            </div>
-
+            {data.componentType === 'enum' ? createEnumTable() : createTable()}
 
         </div>
     )

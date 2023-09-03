@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import dagre from 'dagre';
+
 import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import ReactFlow, {
@@ -16,8 +16,9 @@ import DownloadButton from './components/DownloadButton';
 import RelationEdge from './components/RelationEdge';
 import SelfConnectingEdge from './components/SelfConnectingEdge';
 import TableNode from './components/TableNode';
-import { parseSQLToNodesAndEdges } from './helpers/helpers';
+import { parseSQLToNodesAndEdges } from './helpers/sqlHelpers';
 import { initialEdges, initialNodes } from './initial';
+import { getLayoutedElements } from './helpers/layoutElements';
 
 const edgeTypes = {
   selfconnecting: SelfConnectingEdge,
@@ -28,45 +29,6 @@ const nodeTypes = {
   tableNode: TableNode,
 };
 
-
-const dagreGraph = new dagre.graphlib.Graph();
-dagreGraph.setDefaultEdgeLabel(() => ({}));
-
-
-const nodeWidth = 300;
-const nodeHeight = 300;
-
-const getLayoutedElements = (nodes: any[], edges: any[], direction = 'TB') => {
-  const isHorizontal = direction === 'LR';
-  dagreGraph.setGraph({ rankdir: direction });
-
-  nodes.forEach((node) => {
-    dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
-  });
-
-  edges.forEach((edge) => {
-    dagreGraph.setEdge(edge.source, edge.target);
-  });
-
-  dagre.layout(dagreGraph);
-
-  nodes.forEach((node) => {
-    const nodeWithPosition = dagreGraph.node(node.id);
-    node.targetPosition = isHorizontal ? 'left' : 'top';
-    node.sourcePosition = isHorizontal ? 'right' : 'bottom';
-
-    // We are shifting the dagre node position (anchor=center center) to the top left
-    // so it matches the React Flow node anchor point (top left).
-    node.position = {
-      x: nodeWithPosition.x - nodeWidth / 2,
-      y: nodeWithPosition.y - nodeHeight / 2,
-    };
-
-    return node;
-  });
-
-  return { nodes, edges };
-};
 
 const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
   initialNodes,
@@ -84,12 +46,6 @@ export default function App() {
   useEffect(() => {
     if (!codeText) return;
     const { nodes: newNodes, edges: newEdges } = parseSQLToNodesAndEdges(codeText);
-    // const updatedNodes = newNodes.map((newNode) => {
-    //   const existingNode = nodes.find((n: { id: string; }) => n.id === newNode.id);
-    //   return existingNode ? { ...newNode, position: existingNode.position } : newNode;
-    // });
-    // const updatedEdges = [...edges, ...newEdges.filter((newEdge) => !edges.some((edge: { id: string; }) => edge.id === newEdge.id))];
-
     const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
       newNodes,
       newEdges,
