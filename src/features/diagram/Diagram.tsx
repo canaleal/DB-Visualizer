@@ -13,6 +13,7 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 import { RootState } from '../../store/store';
 import DownloadButton from './components/DownloadButton';
+import RelationEdge from './components/RelationEdge';
 import SelfConnectingEdge from './components/SelfConnectingEdge';
 import TableNode from './components/TableNode';
 import { parseSQLToNodesAndEdges } from './helpers/helpers';
@@ -20,6 +21,7 @@ import { initialEdges, initialNodes } from './initial';
 
 const edgeTypes = {
   selfconnecting: SelfConnectingEdge,
+  relation: RelationEdge,
 };
 
 const nodeTypes = {
@@ -31,8 +33,8 @@ const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
 
 
-const nodeWidth = 200;
-const nodeHeight = 200;
+const nodeWidth = 300;
+const nodeHeight = 300;
 
 const getLayoutedElements = (nodes: any[], edges: any[], direction = 'TB') => {
   const isHorizontal = direction === 'LR';
@@ -114,6 +116,46 @@ export default function App() {
         <Background  gap={12} size={1} />
         <DownloadButton />
       </ReactFlow>
+      <svg width="0" height="0">
+        <defs>
+          <marker
+            id="sql-one"
+            markerWidth="12.5"
+            markerHeight="12.5"
+            viewBox="-10 -10 20 20"
+            orient="auto-start-reverse"
+            refX="0"
+            refY="0"
+          >
+            <polyline
+              className="text-gray-400 stroke-current"
+              strokeWidth="3"
+              strokeLinecap="square"
+              fill="none"
+              points="-10,-8 -10,8"
+            />
+          </marker>
+
+          <marker
+            id="sql-many"
+            markerWidth="12.5"
+            markerHeight="12.5"
+            viewBox="-10 -10 20 20"
+            orient="auto-start-reverse"
+            refX="0"
+            refY="0"
+          >
+            <polyline
+              className="text-gray-400 stroke-current"
+              strokeLinejoin="round"
+              strokeLinecap="square"
+              strokeWidth="1.5"
+              fill="none"
+              points="0,-8 -10,0 0,8"
+            />
+          </marker>
+        </defs>
+      </svg>
     </div>
   );
 }

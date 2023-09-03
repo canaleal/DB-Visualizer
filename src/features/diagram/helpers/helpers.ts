@@ -1,24 +1,55 @@
-import { IEdge, IEnumReference, IForeignReference, INode, ITableData, SQLType } from "../types";
+import { IEdge, IEnumReference, IForeignReference, INode, ISQLTableData, RelationType } from "../types";
 
-const extractForeignKeys = (stmt: string, tableName: string) => {
+
+const extractForeignKeys = (
+    stmt: string,
+    tableName: string,
+    allTableStatements: string[]
+  ): IForeignReference[] => {
     const foreignKeyRegex = [
-        /FOREIGN\s+KEY\s+\((\w+)\)\s+REFERENCES\s+(\w+)\s*\((\w+)\)/ig,
-        /(\w+)\s+[\w\s]+REFERENCES\s+(\w+)\s*\((\w+)\)/ig
+      /FOREIGN\s+KEY\s+\((\w+)\)\s+REFERENCES\s+(\w+)\s*\((\w+)\)/ig,
+      /(\w+)\s+[\w\s]+REFERENCES\s+(\w+)\s*\((\w+)\)/ig,
     ];
-    const foreignKeys = [];
-    for (const regex of foreignKeyRegex) {
-        let match;
-        while ((match = regex.exec(stmt)) !== null) {
-            foreignKeys.push({
-                sourceColumn: match[1],
-                sourceTable: tableName,
-                targetTable: match[2],
-                targetColumnName: match[3],
-            });
-        }
+  
+    const uniqueConstraintRegex = /UNIQUE\s*\((\w+)\)/ig;
+  
+    const foreignKeys: IForeignReference[] = [];
+    const uniqueColumns: string[] = [];
+  
+    let match;
+  
+    // Search for UNIQUE constraints
+    while ((match = uniqueConstraintRegex.exec(stmt)) !== null) {
+      uniqueColumns.push(match[1]);
     }
+  
+    for (const regex of foreignKeyRegex) {
+      while ((match = regex.exec(stmt)) !== null) {
+        let relationship: RelationType = '1-m';  // default relationship
+        if (uniqueColumns.includes(match[1])) {
+          relationship = '1-1';
+        } else {
+          // Check for back-reference in the other tables to confirm if it is M:1 or M:M
+          for (const otherTableStmt of allTableStatements) {
+            if (otherTableStmt.includes(`REFERENCES ${tableName}(${match[1]})`)) {
+              relationship = 'm-m';  // Identified as many-to-many
+              break;
+            }
+          }
+        }
+  
+        foreignKeys.push({
+          sourceColumn: match[1],
+          sourceTable: tableName,
+          targetTable: match[2],
+          targetColumnName: match[3],
+          relationType: relationship,
+        });
+      }
+    }
+  
     return foreignKeys;
-};
+  };
 
 const extractEnumReferences = (stmt: string, knownEnums: string[], tableName: string) => {
     const references = [];
@@ -48,11 +79,11 @@ const extractEnumInfo = (stmt: string) => {
 };
 
 
-const extractTableInfo = (stmt: string): { tableName: string | null, tableColumns: ITableData[] } => {
+const extractTableInfo = (stmt: string): { tableName: string | null, tableColumns: ISQLTableData[] } => {
     const tableNameMatch = stmt.match(/CREATE\s+TABLE\s+(\w+)/i);
     const tableName = tableNameMatch ? tableNameMatch[1] : null;
 
-    const tableColumns: ITableData[] = [];
+    const tableColumns: ISQLTableData[] = [];
 
     const columnsPartMatch = stmt.match(/CREATE\s+TABLE\s+\w+\s*\(([\s\S]+)\)/i); // Adjusted to capture all characters
     const columnsPart = columnsPartMatch ? columnsPartMatch[1] : null;
@@ -98,27 +129,58 @@ const extractTableInfo = (stmt: string): { tableName: string | null, tableColumn
 };
 
 
-//! combine enum data and table data into one object
-function createNode(name: string, componentType: SQLType = 'table', nodeType: string = 'tableNode', enumData?: string[] , tableData?: ITableData[]): INode {
-    const id = `${componentType}-${name}`
+
+function createTableNode(tableName: string, tableData:ISQLTableData[]): INode{
+    const id = `node-${tableName}`
     return {
         id,
-        data: { enumValues: enumData, tableColumns: tableData, label: name, componentType, },
-        type: nodeType,
+        data: { tableColumns: tableData, label: tableName, componentType: 'table' },
+        type: 'tableNode',
         position: { x: 0, y: 0 },
     };
 }
 
-
-//! TODO: Add support for column row to column row edges
-function createEdge(sourceElement: string, sourceType: SQLType, targetElement: string, targetType: SQLType, sourceColumn: string, label: string, isAnimated = false, type = 'smoothstep'): IEdge {
-    const id = `edge-${sourceElement}-${targetElement}-${sourceColumn}`;
-    const source = `${sourceType}-${sourceElement}`;
-    const target = `${targetType}-${targetElement}`;
-    type = source === target ? 'selfconnecting' : 'smoothstep';
-    return { id, source, target, data: { label: label }, animated: isAnimated, type: type };
+function createEnumNode(enumName: string, enumData: string[]): INode {
+    const id = `node-${enumName}`
+    return {
+        id,
+        data: { enumValues: enumData, label: enumName, componentType: 'enum' },
+        type: 'tableNode',
+        position: { x: 0, y: 0 },
+    };
 }
 
+interface IEnumEdgeData {
+    sourceTable: string,
+    sourceColumn: string,
+    targetEnum: string,
+}
+
+const createEnumEdge = ({sourceTable, sourceColumn, targetEnum}: IEnumEdgeData): IEdge => {
+    const id = `edge-${sourceTable}-${targetEnum}`;
+    const source = `node-${sourceTable}`;
+    const target = `node-${targetEnum}`;
+    const label = `${sourceColumn} -> ${targetEnum}`;
+    return { id, source, target, label, data: { label: label }, animated: true, type: 'smoothstep' };
+}
+
+
+interface ITableEdgeData {
+    sourceTable: string,
+    sourceColumn: string,
+    targetTable: string,
+    targetColumn: string,
+    relationType: RelationType,
+}
+
+const createTableEdge = ({sourceTable, sourceColumn, targetTable, targetColumn, relationType}: ITableEdgeData): IEdge => {
+    const id = `edge-${sourceTable}-${sourceColumn}-${targetTable}-${targetColumn}`;
+    const source = `node-${sourceTable}`;
+    const target = `node-${targetTable}`;
+    const label = `${sourceColumn} -> ${targetColumn}`;
+    return { id, source, target, label, data: { label: label, relationType: relationType }, animated: false, type: 'relation' };
+
+}
 
 export const parseSQLToNodesAndEdges = (sql: string) => {
     const statements = sql.split(';').map(stmt => stmt.trim()).filter(Boolean);
@@ -135,31 +197,32 @@ export const parseSQLToNodesAndEdges = (sql: string) => {
         const stmt = statements[i];
         const { tableName, tableColumns } = extractTableInfo(stmt);
         if (tableName) {
-            nodes.push(createNode(tableName, 'table', 'tableNode', undefined, tableColumns ));
+            nodes.push(createTableNode(tableName, tableColumns));
         }
 
         const { enumName, enumValues } = extractEnumInfo(stmt);
         if (enumName) {
             enumNames.push(enumName);
-            nodes.push(createNode(enumName, 'enum', 'tableNode', enumValues));
+            nodes.push(createEnumNode(enumName, enumValues));
         }
 
-        foreignReferences.push(...extractForeignKeys(stmt, tableName as string));
+        foreignReferences.push(...extractForeignKeys(stmt, tableName as string, statements));
         enumReferences.push(...extractEnumReferences(stmt, enumNames, tableName as string)); //! Assuming that enums are defined before they are used
     }
 
     for (let i = 0, len = foreignReferences.length; i < len; i++) {
-        const { sourceColumn, sourceTable, targetTable, targetColumnName } = foreignReferences[i];
-        const edge: IEdge = createEdge(sourceTable, 'table', targetTable, 'table', targetColumnName, `${sourceColumn} -> ${targetColumnName}`, false);
+        const { sourceColumn, sourceTable, targetTable, targetColumnName, relationType } = foreignReferences[i];
+        const edge: IEdge = createTableEdge({sourceTable, sourceColumn, targetTable, targetColumn: targetColumnName, relationType: relationType})
         edges.push(edge);
 
     }
 
     for (let i = 0, len = enumReferences.length; i < len; i++) {
         const { sourceColumn, sourceTable, targetEnum } = enumReferences[i];
-        const edge: IEdge = createEdge(sourceTable, 'table', targetEnum, 'enum', sourceColumn, `${sourceColumn} -> ${targetEnum}`, true);
+        const edge: IEdge = createEnumEdge({sourceTable, sourceColumn, targetEnum})
         edges.push(edge);
     }
+
 
     return { nodes, edges };
 };
