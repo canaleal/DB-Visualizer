@@ -13,7 +13,6 @@ export const TableNode = ({ data, isConnectable }: ITableNodeProps) => {
         if (!data.enumValues) return null;
         return (
             <>
-
                 <Handle
                     type="target"
                     position={Position.Top}
