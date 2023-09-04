@@ -1,27 +1,40 @@
-# React + TypeScript + Vite
+<div align="center">
+  <h1>Web-based Database Visualization Tool</h1>
+  <h4>SQL Queries • Dynamic Graphs • Web Development</h4>
+</div>
+<h1>Contents</h1>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- [Overview](#overview)
+- [Technologies](#technologies)
+- [Installation](#installation)
+- [Contributing](#contributing)
 
-Currently, two official plugins are available:
+<h1 id="overview">Overview</h1>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project is aimed at transforming SQL queries into dynamic, interactive graphs composed of nodes and edges. The main objective is to make database exploration and management more intuitive by visually rendering relationships and structures, all directly in your web browser.
 
-## Expanding the ESLint configuration
+<h1>Technologies</h1>
+<div align="center" id="technologies">
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+<table>
+  <tr> 
+    <td align='center'><img src="https://img.shields.io/badge/react_js-%23121011.svg?style=for-the-badge&logo=react" alt="React JS"/></td>
+    <td align='center'><img src="https://img.shields.io/badge/vite-%23121011.svg?style=for-the-badge&logo=vite" alt="Vite"/></td>
+    <td align='center'><img src="https://img.shields.io/badge/redux-%23121011.svg?style=for-the-badge&logo=redux" alt="Redux"/></td>
+    <td align='center'><img src="https://img.shields.io/badge/tailwind-%23121011.svg?style=for-the-badge&logo=tailwind-css" alt="Tailwind CSS"/></td>
+  </tr>
+ </table>
+</div>
 
-- Configure the top-level `parserOptions` property like this:
+<h1>Installation</h1>
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+1. Install Node.js on your computer.
+2. Clone this repository to your local machine using `git clone`.
+3. Navigate to the project directory.
+4. Install the required dependencies using `npm install` or `yarn install`.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+This command installs the necessary dependencies, including React JS, Vite, Redux, and Tailwind CSS.
+
+<h1>Contributing</h1>
+At the moment, we are not accepting contributions. However, we appreciate your support and encourage you to stay updated with any future developments.
+
