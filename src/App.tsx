@@ -17,20 +17,23 @@ function App() {
   return (
 
     <section className='flex flex-row h-screen w-screen'>
-      <SideBar />
+      <div className='absolute top-0 left-0 z-20 md:relative flex flex-row h-full w-fit'>
+        <SideBar>
+          <button onClick={toggleSideBar} className=' z-20 bg-zinc-900 hover:bg-zinc-800 p-2 h-12 text-white rounded-b-md'>
+            {
+              isSideBarOpen ? (<IconArrowLeft fillColor='white' size={20} />) : (<IconArrowRight fillColor='white' size={20} />)
+            }
+          </button>
+        </SideBar>
 
-      <div className={`${isSideBarOpen ? "w-4/5 sm:w-1/3  " : "w-0"} flex flex-col absolute top-0 left-0  sm:relative z-20 transition-width duration-200 shadow-lg`}>
-        <TextEditor />
+        <div className={`${isSideBarOpen ? "w-[36rem] " : "w-0"} flex flex-col  z-20 transition-width duration-200 shadow-lg`}>
+          <TextEditor />
+        </div>
       </div>
 
-      <div className={`relative flex flex-col w-full sm:${isSideBarOpen ? 'w-2/3' : 'w-full'} shadow-lg`}>
+      {isSideBarOpen && <div  onClick={toggleSideBar} className='absolute top-0 left-0 bg-zinc-900 bg-opacity-80 h-full w-full md:hidden z-10'></div>}
 
-        <button onClick={toggleSideBar} className='absolute top-2 left-2 z-20 bg-zinc-900 hover:bg-zinc-800 p-2 text-white rounded-md'>
-          {
-            isSideBarOpen ? (<IconArrowLeft fillColor='white' size={20} />) : (<IconArrowRight fillColor='white' size={20} />)
-          }
-        </button>
-
+      <div className={`flex flex-col w-full sm:${isSideBarOpen ? 'w-2/3' : 'w-full'} shadow-lg`}>
         <Diagram />
       </div>
     </section>
