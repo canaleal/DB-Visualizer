@@ -20,6 +20,7 @@ import { parseSQLToNodesAndEdges } from './helpers/sqlHelpers';
 import { initialEdges, initialNodes } from './initial';
 import { getLayoutedElements } from './helpers/layoutElements';
 
+
 const edgeTypes = {
   selfconnecting: SelfConnectingEdge,
   relation: RelationEdge,
