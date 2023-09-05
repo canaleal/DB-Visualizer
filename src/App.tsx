@@ -11,6 +11,7 @@ import { setCodeText } from './store/codeTextSlice';
 import ResetOption from './features/main/ResetOption';
 import SettingsOption from './features/main/SettingsOption';
 import ImportSqlOption from './features/main/ImportSQLOption';
+import ExportSqlOption from './features/main/ExportSQLOption';
 
 function App() {
 
@@ -47,6 +48,8 @@ function App() {
           <ShareOption extraClasses='h-12' />
 
           <ImportSqlOption extraClasses='h-12' />
+
+          <ExportSqlOption extraClasses='h-12' />
 
           <ResetOption extraClasses='h-12' />
 

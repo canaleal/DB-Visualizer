@@ -1,6 +1,5 @@
 
 
-
 import { IconSettings, IconCode   } from '@tabler/icons-react';
 import Modal from "../../components/Modal";
 import { useState } from "react";
@@ -11,20 +10,16 @@ interface ISettingsOptionProps {
 const SettingsOption = ({ extraClasses }: ISettingsOptionProps) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-    }
 
     return (
         <>
-            <Modal isOpen={isModalOpen} handleClose={handleCloseModal}>
+            <Modal isOpen={isModalOpen} handleClose={() => setIsModalOpen(false)}>
 
                 <div className="flex flex-col  text-black p-4">
-                    <p className="font-bold text-2xl">DB_Visualizer</p>
+                    <p className="font-bold text-2xl">DB Visualizer</p>
                     <div className="flex flex-col mt-4">
                         <p >Web-based database visualization tool transforms SQL queries into dynamic, interactive graphs composed of nodes and edges. The platform aims to make database exploration and management more intuitive by rendering relationships and structures visually, all directly in your web browser. </p>
                     </div>
-
 
                 </div>
 
@@ -35,7 +30,6 @@ const SettingsOption = ({ extraClasses }: ISettingsOptionProps) => {
                         Github
                     </a>
                 </div>
-
 
             </Modal>
 

@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux/es/exports";
 import { RootState } from "../../store/store";
 import { toUrlSafeB64 } from "../../helpers/urlGenerators";
-import { IconShare  } from '@tabler/icons-react';
+import { IconShare } from '@tabler/icons-react';
 import Modal from "../../components/Modal";
 import { useState } from "react";
 
@@ -17,20 +17,18 @@ const ShareOption = ({ extraClasses }: IShareOptionProps) => {
         const params = new URLSearchParams({ code: toUrlSafeB64(codeText) });
         const toCopy = `${location.origin}?${params.toString()}`;
         await navigator.clipboard.writeText(toCopy);
+
+        setIsModalOpen(false);
     };
 
 
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-    }
 
     return (
 
         <>
-            <Modal isOpen={isModalOpen} handleClose={handleCloseModal}>
-
+            <Modal isOpen={isModalOpen} handleClose={() => setIsModalOpen(false)}>
                 <div className="flex flex-col  text-black p-4">
-                    <p className="font-bold text-2xl">Create_Sharable_Link</p>
+                    <p className="font-bold text-2xl">Create Sharable Link</p>
                     <div className="flex flex-col mt-4">
                         <p >Generate a link to share the diagram with others. </p>
                         <p className="text-red-600">Links do not expire and cannot be deleted!</p>
@@ -42,8 +40,8 @@ const ShareOption = ({ extraClasses }: IShareOptionProps) => {
                         Do not create a Link
                     </button>
 
-                    <button title="Reset Text Editor" className={`flex gap-1 bg-indigo-900 hover:bg-indigo-800 p-2  rounded-md text-white`} onClick={() => { createCopyLink(); handleCloseModal(); }}>
-                        <IconShare     stroke='white' size={20} strokeWidth={2} className='my-auto' />
+                    <button title="Reset Text Editor" className={`flex gap-1 bg-indigo-900 hover:bg-indigo-800 p-2  rounded-md text-white`} onClick={() => { createCopyLink();}}>
+                        <IconShare stroke='white' size={20} strokeWidth={2} className='my-auto' />
                         Create Link
                     </button>
                 </div>
@@ -51,11 +49,10 @@ const ShareOption = ({ extraClasses }: IShareOptionProps) => {
             </Modal>
 
             <button title="Share Link" className={`bg-dark hover:bg-zinc-800 p-2 text-white ${extraClasses}`} onClick={() => setIsModalOpen(true)}>
-                <IconShare  stroke='white' size={20} strokeWidth={2} />
+                <IconShare stroke='white' size={20} strokeWidth={2} />
             </button>
 
         </>
-
 
     )
 }

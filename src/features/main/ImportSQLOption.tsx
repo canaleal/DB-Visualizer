@@ -23,7 +23,7 @@ const ImportSqlOption = ({ extraClasses }: IImportSqlOptionProps) => {
         }
     }
 
-    const acceptInput = () => {
+    const acceptImport = () => {
 
         if (!sqlFileContent) return;
         //todo : Add a check to see if the file is a valid sql file
@@ -32,8 +32,7 @@ const ImportSqlOption = ({ extraClasses }: IImportSqlOptionProps) => {
         setIsModalOpen(false);
     }
 
-    const cancelInput = () => {
-        // Reset the content and close the modal
+    const cancelImport = () => {
         setSqlFileContent(null);
         setIsModalOpen(false);
     }
@@ -46,27 +45,32 @@ const ImportSqlOption = ({ extraClasses }: IImportSqlOptionProps) => {
 
                     {sqlFileContent ? (
                         <div className="flex flex-col mt-4 h-64 overflow-auto">
-                            <p>Imported SQL Content:</p>
                             <pre>{sqlFileContent}</pre>
                         </div>
                     ) : (
-                        <button title="Open File Explorer" className="bg-zinc-900 hover:bg-zinc-800 p-2 rounded-md mt-4 text-white" onClick={() => fileInput.current?.click()}>
+                        <div className="flex flex-col mt-4 h-fit overflow-auto">
+                            <p>Import any SQL file into the editor.</p>
+                        </div>
+                    )}
+                </div>
+
+                <div className="flex flex-row justify-between gap-2 mt-2 bg-gray-100 px-4 py-4 rounded-b-md">
+                    {sqlFileContent ? (
+                        <>
+                            <button title="Cancel Import" className="bg-zinc-900 hover:bg-zinc-800 p-2 rounded-md text-white" onClick={cancelImport}>
+                                Cancel Import
+                            </button>
+                            <button title="Accept Import" className="flex gap-1 bg-indigo-900 hover:bg-indigo-800 p-2 rounded-md text-white" onClick={acceptImport}>
+                                <IconUpload stroke='white' size={20} strokeWidth={2} className='my-auto' />
+                                Accept Import
+                            </button>
+                        </>
+                    ) : (
+                        <button title="Open File Explorer" className="bg-zinc-900 hover:bg-zinc-800 p-2 rounded-md  text-white" onClick={() => fileInput.current?.click()}>
                             Open File Explorer
                         </button>
                     )}
                 </div>
-                {sqlFileContent && (
-                    <div className="flex flex-row justify-between gap-2 mt-2 bg-gray-100 px-4 py-4 rounded-b-md">
-                        <button title="Cancel Input" className="bg-zinc-900 hover:bg-zinc-800 p-2 rounded-md text-white" onClick={cancelInput}>
-                            Cancel Input
-                        </button>
-
-                        <button title="Accept Input" className="flex gap-1 bg-indigo-900 hover:bg-indigo-800 p-2 rounded-md text-white" onClick={acceptInput}>
-                            <IconUpload stroke='white' size={20} strokeWidth={2} className='my-auto' />
-                            Accept Input
-                        </button>
-                    </div>
-                )}
             </Modal>
 
             <button title="Import SQL File" className={`bg-dark hover:bg-zinc-800 p-2 text-white ${extraClasses}`} onClick={() => setIsModalOpen(true)}>
