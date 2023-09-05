@@ -31,15 +31,26 @@ const DiagramStyleOption = () => {
         />
     );
 
+    const handleStyleMenuToggle = () => {
+        if(isStyleMenuOpen){
+            setIsStyleMenuOpen(false);
+            setIsResetMenuOpen(false);
+        }
+        else{
+            setIsStyleMenuOpen(true);
+        }
+    }
+
     const handleReset = () => {
         dispatch(resetAllThemes());
-        setIsStyleMenuOpen(false);
-        setIsResetMenuOpen(false);
+        handleStyleMenuToggle();
     }
+
+ 
 
     return (
         <Panel position="top-left" className='flex flex-row gap-2'>
-            <button className="bg-indigo-900 hover:bg-indigo-800 p-2 text-white rounded-md h-fit" onClick={() => setIsStyleMenuOpen(!isStyleMenuOpen)}>
+            <button className="bg-indigo-900 hover:bg-indigo-800 p-2 text-white rounded-md h-fit" onClick={() => handleStyleMenuToggle()}>
                 <IconAdjustmentsAlt stroke='white' size={20} strokeWidth={2} />
             </button>
             {isStyleMenuOpen && (
@@ -76,7 +87,7 @@ const DiagramStyleOption = () => {
                             </div>
 
                             <div className="flex flex-row justify-between gap-2 mt-2 bg-gray-100 px-4 py-4 rounded-b-md">
-                                <button title="Reset Diagram Styles" className={`bg-zinc-900 hover:bg-zinc-800 p-2 rounded-md text-white `} onClick={() => setIsResetMenuOpen(false)}>
+                                <button title="Reset Diagram Styles" className={`bg-zinc-900 hover:bg-zinc-800 p-2 rounded-md text-white `} onClick={() =>  setIsResetMenuOpen(false)}>
                                     Do not Reset Styles
                                 </button>
 
