@@ -7,7 +7,7 @@ interface ISideBarProps {
 
 const SideBar = ({ extraClasses, children }: ISideBarProps) => {
     return (
-        <div className={`flex flex-col bg-zinc-900 text-white z-20 ${extraClasses} `}>
+        <div className={`flex flex-col bg-dark text-white z-20 ${extraClasses} `}>
             {children}
         </div>
     )

@@ -1,14 +1,15 @@
 
 import { useEffect, useState } from 'react';
-import IconArrowLeft from './components/icons/iconArrowL';
-import IconArrowRight from './components/icons/iconArrowR';
+import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import Diagram from './features/diagram/Diagram';
 import TextEditor from './features/editor/TextEditor';
 import SideBar from './features/main/SideBar';
-import CopyButton from './features/main/CopyButton';
+import ShareOption from './features/main/ShareOption';
 import { fromUrlSafeB64 } from './helpers/urlGenerators';
 import { useDispatch } from 'react-redux';
 import { setCodeText } from './store/codeTextSlice';
+import ResetOption from './features/main/ResetOption';
+import SettingsOption from './features/main/SettingsOption';
 
 function App() {
 
@@ -38,14 +39,18 @@ function App() {
         <SideBar>
           <button title='Show/Hide Text Editor' onClick={toggleSideBar} className=' z-20 bg-zinc-900 hover:bg-zinc-800 p-2 h-12 text-white '>
             {
-              isSideBarOpen ? (<IconArrowLeft fillColor='white' size={20} />) : (<IconArrowRight fillColor='white' size={20} />)
+              isSideBarOpen ? (<IconArrowLeft  stroke='white' size={20} strokeWidth={2}/>) : (<IconArrowRight stroke='white' size={20} strokeWidth={2}/>)
             }
           </button>
 
-          <CopyButton extraClasses='h-12 mt-auto' />
+          <ShareOption extraClasses='h-12' />
+
+          <ResetOption extraClasses='h-12' />
+
+          <SettingsOption extraClasses='h-12 mt-auto' />
         </SideBar>
 
-        <div className={`${isSideBarOpen ? "w-[36rem] " : "w-0"} flex flex-col  z-20 transition-width duration-200 shadow-lg`}>
+        <div className={`${isSideBarOpen ? "w-[36rem] " : "w-0"} flex flex-col  z-10 transition-width duration-200 shadow-lg`}>
           <TextEditor />
         </div>
       </div>

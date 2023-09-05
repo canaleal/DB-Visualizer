@@ -32,5 +32,5 @@ export const codeTextSlice = createSlice({
     }
 });
 
-export const { setCodeText} = codeTextSlice.actions;
+export const { setCodeText, resetCodeText} = codeTextSlice.actions;
 export default codeTextSlice.reducer;

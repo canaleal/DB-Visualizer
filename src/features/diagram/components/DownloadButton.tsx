@@ -1,8 +1,8 @@
 import { toJpeg, toPng, toSvg } from 'html-to-image';
 import { useState } from 'react';
 import { Panel, getRectOfNodes, getTransformForBounds, useReactFlow } from 'reactflow';
-import IconDownload from '../../../components/icons/iconDownload';
 
+import { IconDownload } from '@tabler/icons-react';
 
 const imageWidth = 1920;
 const imageHeight = 1080;
@@ -71,7 +71,7 @@ function DownloadButton() {
             </select>
 
             <button className="bg-indigo-900 hover:bg-indigo-800 p-2 text-white rounded-md" onClick={onDownload}>
-                <IconDownload fillColor='white' size={20} />
+                <IconDownload stroke='white' size={20} strokeWidth={2} />
             </button>
 
         </Panel>

@@ -1,5 +1,5 @@
 import { Handle, Position } from 'reactflow';
-import IconKey from '../../../components/icons/iconKey';
+import { IconKey } from '@tabler/icons-react';
 import { IDataType } from '../types';
 
 interface ITableNodeProps {
@@ -64,7 +64,7 @@ export const TableNode = ({ data, isConnectable }: ITableNodeProps) => {
                         {data.tableColumns.map((column, index) => {
                             return (
                                 <tr key={index} className='bg-zinc-700 hover:bg-zinc-600' >
-                                    <td className={`text-xs px-2 py-2 text-zinc-200 flex flex-row gap-1 ${index === 0 ? "font-bold" : ""}`}>{column.name} {column.type.includes("PRIMARY") && <IconKey fillColor='white' size={10} className='my-auto' />}</td>
+                                    <td className={`text-xs px-2 py-2 text-zinc-200 flex flex-row gap-1 ${index === 0 ? "font-bold" : ""}`}>{column.name} {column.type.includes("PRIMARY") && <IconKey size={10} className='my-auto' />}</td>
                                     <td className={`text-xs px-2 py-2 text-zinc-400 text-right ${index === 0 ? "font-bold" : ""}`}>{column.type}</td>
                                 </tr>
                             )
