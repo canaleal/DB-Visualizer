@@ -12,7 +12,7 @@ const initialState: ITextEditorState = {
 };
 
 export const textEditorSlice = createSlice({
-    name: 'codeText',
+    name: 'textEditor',
     initialState,
     reducers: {
         setTheme: (state, action: PayloadAction<ThemeType>) => {

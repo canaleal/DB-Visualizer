@@ -55,18 +55,16 @@ const ImportSqlOption = ({ extraClasses }: IImportSqlOptionProps) => {
                 </div>
 
                 <div className="flex flex-row justify-between gap-2 mt-2 bg-gray-100 px-4 py-4 rounded-b-md">
+                    <button title="Cancel Import" className="bg-zinc-900 hover:bg-zinc-800 p-2 rounded-md text-white" onClick={cancelImport}>
+                        Cancel Import
+                    </button>
                     {sqlFileContent ? (
-                        <>
-                            <button title="Cancel Import" className="bg-zinc-900 hover:bg-zinc-800 p-2 rounded-md text-white" onClick={cancelImport}>
-                                Cancel Import
-                            </button>
-                            <button title="Accept Import" className="flex gap-1 bg-indigo-900 hover:bg-indigo-800 p-2 rounded-md text-white" onClick={acceptImport}>
-                                <IconUpload stroke='white' size={20} strokeWidth={2} className='my-auto' />
-                                Accept Import
-                            </button>
-                        </>
+                        <button title="Accept Import" className="flex gap-1 bg-indigo-900 hover:bg-indigo-800 p-2 rounded-md text-white" onClick={acceptImport}>
+                            <IconUpload stroke='white' size={20} strokeWidth={2} className='my-auto' />
+                            Accept Import
+                        </button>
                     ) : (
-                        <button title="Open File Explorer" className="bg-zinc-900 hover:bg-zinc-800 p-2 rounded-md  text-white" onClick={() => fileInput.current?.click()}>
+                        <button title="Open File Explorer" className=" bg-indigo-900 hover:bg-indigo-800 p-2 rounded-md  text-white" onClick={() => fileInput.current?.click()}>
                             Open File Explorer
                         </button>
                     )}

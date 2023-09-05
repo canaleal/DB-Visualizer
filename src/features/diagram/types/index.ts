@@ -53,3 +53,19 @@ export interface IEdge {
     label: string,
 }
 
+
+export interface ITableTheme {
+    headerBackgroundColor: string;
+    headerTextColor: string;
+    bodyBackgroundColor: string;
+    bodyBackgroundHoverColor: string;
+    bodyTextColor: string;
+}
+
+export interface IEnumTheme {
+    headerBackgroundColor: string;
+    headerTextColor: string;
+    bodyBackgroundColor: string;
+    bodyBackgroundHoverColor: string;
+    bodyTextColor: string;
+}

@@ -70,7 +70,7 @@ function DownloadButton() {
                 ))}
             </select>
 
-            <button className="bg-indigo-900 hover:bg-indigo-800 p-2 text-white rounded-md" onClick={onDownload}>
+            <button title="Download Image" className="bg-indigo-900 hover:bg-indigo-800 p-2 text-white rounded-md" onClick={onDownload}>
                 <IconDownload stroke='white' size={20} strokeWidth={2} />
             </button>
 

@@ -16,6 +16,7 @@ const ResetOption = ({ extraClasses }: IResetOptionProps) => {
     const dispatch = useDispatch();
     const handleReset = () => {
         dispatch(resetCodeText());
+        setIsModalOpen(false);
     }
     return (
         <>

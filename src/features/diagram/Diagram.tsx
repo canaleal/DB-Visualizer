@@ -17,8 +17,9 @@ import RelationEdge from './components/RelationEdge';
 import SelfConnectingEdge from './components/SelfConnectingEdge';
 import TableNode from './components/TableNode';
 import { parseSQLToNodesAndEdges } from './helpers/sqlHelpers';
-import { initialEdges, initialNodes } from './initial';
+import { initialEdges, initialNodes } from './helpers/initialElements';
 import { getLayoutedElements } from './helpers/layoutElements';
+import DiagramStyleOption from './components/DiagramStyleOption';
 
 
 const edgeTypes = {
@@ -72,6 +73,7 @@ export default function App() {
         <MiniMap />
         <Background  gap={12} size={1} />
         <DownloadButton />
+        <DiagramStyleOption />
       </ReactFlow>
       <svg width="0" height="0">
         <defs>
