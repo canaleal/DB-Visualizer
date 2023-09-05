@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { setCodeText } from './store/codeTextSlice';
 import ResetOption from './features/main/ResetOption';
 import SettingsOption from './features/main/SettingsOption';
+import ImportSqlOption from './features/main/ImportSQLOption';
 
 function App() {
 
@@ -44,6 +45,8 @@ function App() {
           </button>
 
           <ShareOption extraClasses='h-12' />
+
+          <ImportSqlOption extraClasses='h-12' />
 
           <ResetOption extraClasses='h-12' />
 
