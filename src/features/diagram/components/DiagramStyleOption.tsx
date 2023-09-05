@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ColorInput } from '@mantine/core';
-import { Panel } from 'reactflow';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import { resetAllThemes, setEnumTheme, setTableTheme } from '../diagramStyleSlice';
 import { IconAdjustmentsAlt, IconTrash } from '@tabler/icons-react';
 import { IEnumTheme, ITableTheme } from '../types';
+import { Panel } from 'reactflow';
 
 const DiagramStyleOption = () => {
+    const [isResetMenuOpen, setIsResetMenuOpen] = useState(false);
     const tableTheme = useSelector((state: RootState) => state.diagramStyle.tableTheme);
     const enumTheme = useSelector((state: RootState) => state.diagramStyle.enumTheme);
     const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const DiagramStyleOption = () => {
     const handleReset = () => {
         dispatch(resetAllThemes());
         setIsStyleMenuOpen(false);
+        setIsResetMenuOpen(false);
     }
 
     return (
@@ -62,15 +64,45 @@ const DiagramStyleOption = () => {
                         })}
                     </div>
 
-                    <div className="flex flex-row justify-between gap-2 mt-2 bg-gray-100 px-4 py-4 rounded-b-md">
-                        <button title="Reset Text Editor" className={`flex gap-1 p-2 bg-zinc-900 hover:bg-zinc-800 text-white  rounded-md  `} onClick={() => { handleReset(); }}>
-                            <IconTrash stroke='black' size={20} strokeWidth={2} className='my-auto' />
-                            Reset all Styles
-                        </button>
-                    </div>
+
+                    {isResetMenuOpen ? (
+                        <div>
+                            <div className="flex flex-col  text-black p-4">
+                                <p className="font-bold text-2xl">Reset Diagram Styles</p>
+                                <div className="flex flex-col mt-4">
+                                    <p >Reset the Diagram styles and clear saved styles.</p>
+                                    <p className="text-red-600">This change cannot be undone!</p>
+                                </div>
+                            </div>
+
+                            <div className="flex flex-row justify-between gap-2 mt-2 bg-gray-100 px-4 py-4 rounded-b-md">
+                                <button title="Reset Diagram Styles" className={`bg-zinc-900 hover:bg-zinc-800 p-2 rounded-md text-white `} onClick={() => setIsResetMenuOpen(false)}>
+                                    Do not Reset Styles
+                                </button>
+
+                                <button title="Reset Diagram Style" className={`flex gap-1 bg-indigo-900 hover:bg-indigo-800 p-2  rounded-md text-white `} onClick={() => { handleReset(); }}>
+                                    <IconTrash stroke='white' size={20} strokeWidth={2} className='my-auto' />
+                                    Reset Diagram Styles
+                                </button>
+                            </div>
+
+                        </div>
+
+                    ) :
+                        (
+                            <div className="flex flex-row justify-between gap-2 mt-2 bg-gray-100 px-4 py-4 rounded-b-md">
+                                <button title="Reset Text Editor" className={`flex gap-1 p-2 bg-zinc-900 hover:bg-zinc-800 text-white  rounded-md  `} onClick={() => { setIsResetMenuOpen(true); }}>
+                                    <IconTrash stroke='black' size={20} strokeWidth={2} className='my-auto' />
+                                    Reset all Styles
+                                </button>
+                            </div>
+                        )}
+
+
                 </div>
 
             )}
+
         </Panel>
     );
 };

@@ -59,7 +59,7 @@ export default function App() {
   }, [codeText]);
 
   return (
-    <div style={{ width: '100%', height: '100%' }}>
+    <div className='h-full w-full'>
       <ReactFlow
         nodes={nodes}
         edges={edges}
