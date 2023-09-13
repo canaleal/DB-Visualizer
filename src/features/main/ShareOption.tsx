@@ -21,10 +21,7 @@ const ShareOption = ({ extraClasses }: IShareOptionProps) => {
         setIsModalOpen(false);
     };
 
-
-
     return (
-
         <>
             <Modal isOpen={isModalOpen} handleClose={() => setIsModalOpen(false)}>
                 <div className="flex flex-col  text-black p-4">
@@ -40,7 +37,7 @@ const ShareOption = ({ extraClasses }: IShareOptionProps) => {
                         Do not create a Link
                     </button>
 
-                    <button title="Reset Text Editor" className={`flex gap-1 bg-indigo-900 hover:bg-indigo-800 p-2  rounded-md text-white`} onClick={() => { createCopyLink();}}>
+                    <button title="Reset Text Editor" className={`flex gap-1 bg-indigo-900 hover:bg-indigo-800 p-2  rounded-md text-white`} onClick={() => { createCopyLink(); }}>
                         <IconShare stroke='white' size={20} strokeWidth={2} className='my-auto' />
                         Create Link
                     </button>
@@ -51,9 +48,7 @@ const ShareOption = ({ extraClasses }: IShareOptionProps) => {
             <button title="Share Link" className={`bg-dark hover:bg-zinc-800 p-2 text-white ${extraClasses}`} onClick={() => setIsModalOpen(true)}>
                 <IconShare stroke='white' size={20} strokeWidth={2} />
             </button>
-
         </>
-
     )
 }
 

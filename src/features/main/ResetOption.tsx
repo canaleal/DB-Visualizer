@@ -35,8 +35,8 @@ const ResetOption = ({ extraClasses }: IResetOptionProps) => {
                         Do not Reset
                     </button>
 
-                    <button title="Reset Text Editor" className={`flex gap-1 bg-indigo-900 hover:bg-indigo-800 p-2  rounded-md text-white `} onClick={() => { handleReset();}}>
-                    <IconTrash   stroke='white' size={20} strokeWidth={2} className='my-auto' />
+                    <button title="Reset Text Editor" className={`flex gap-1 bg-indigo-900 hover:bg-indigo-800 p-2  rounded-md text-white `} onClick={() => { handleReset(); }}>
+                        <IconTrash stroke='white' size={20} strokeWidth={2} className='my-auto' />
                         Reset the Editor
                     </button>
                 </div>
