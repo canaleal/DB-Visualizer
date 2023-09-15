@@ -43,11 +43,11 @@ export default function App() {
 
    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onConnect = useCallback((params: any) => setEdges((eds: any) => addEdge(params, eds)), [setEdges]);
-  const codeText = useSelector((state: RootState) => state.codeText.codeText);
+  const selectedScript = useSelector((state: RootState) => state.script.selectedScript);
 
   useEffect(() => {
-    if (!codeText) return;
-    const { nodes: newNodes, edges: newEdges } = parseSQLToNodesAndEdges(codeText);
+    if (!selectedScript) return;
+    const { nodes: newNodes, edges: newEdges } = parseSQLToNodesAndEdges(selectedScript.text);
     const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
       newNodes,
       newEdges,
@@ -56,7 +56,7 @@ export default function App() {
 
     setNodes(layoutedNodes);
     setEdges(layoutedEdges);
-  }, [codeText]);
+  }, [selectedScript]);
 
   return (
     <div className='h-full w-full'>

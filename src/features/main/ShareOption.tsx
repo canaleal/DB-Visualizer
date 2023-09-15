@@ -11,10 +11,11 @@ interface IShareOptionProps {
 
 const ShareOption = ({ extraClasses }: IShareOptionProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const codeText = useSelector((state: RootState) => state.codeText.codeText);
+    const selectedScript = useSelector((state: RootState) => state.script.selectedScript);
 
     const createCopyLink = async () => {
-        const params = new URLSearchParams({ code: toUrlSafeB64(codeText) });
+        if(!selectedScript) return;
+        const params = new URLSearchParams({ code: toUrlSafeB64(JSON.stringify(selectedScript)) });
         const toCopy = `${location.origin}?${params.toString()}`;
         await navigator.clipboard.writeText(toCopy);
 

@@ -2,7 +2,8 @@ import React, { useState, useRef } from 'react';
 import Modal from "../../components/Modal";
 import { IconUpload } from '@tabler/icons-react';
 import { useDispatch } from 'react-redux';
-import { setCodeText } from '../../store/codeTextSlice';
+import { setSelectedScript } from '../../store/scriptSlice';
+import { IScript } from '../../types';
 
 interface IImportSqlOptionProps {
     extraClasses?: string;
@@ -27,7 +28,15 @@ const ImportSqlOption = ({ extraClasses }: IImportSqlOptionProps) => {
 
         if (!sqlFileContent) return;
         //todo : Add a check to see if the file is a valid sql file
-        dispatch(setCodeText(sqlFileContent));
+        //Create new script object
+        const script : IScript = {
+            id: Math.random().toString(36).substr(2, 9),
+            title: "Imported SQL File",
+            text: sqlFileContent,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+        }
+        dispatch(setSelectedScript(script));
         setSqlFileContent(null);
         setIsModalOpen(false);
     }

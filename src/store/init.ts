@@ -1,4 +1,6 @@
-export const EXAMPLE_SQL = `
+import { IScript } from "../types"
+
+const EXAMPLE_SQL = `
 -- Enums
 CREATE TYPE order_status AS ENUM ('Pending', 'Shipped', 'Cancelled', 'Delivered');
 CREATE TYPE payment_method AS ENUM ('Credit Card', 'Paypal', 'Bank Transfer');
@@ -56,3 +58,38 @@ Quantity INT NOT NULL,
 UnitPrice DECIMAL(10, 2) NOT NULL
 );
 `
+
+const EXAMPLE_SQL_2 = `
+-- Create a Person table with person_id as its primary key
+CREATE TABLE Person (
+  person_id SERIAL PRIMARY KEY,
+  name VARCHAR(50),
+  age INT
+);
+
+-- Create a Passport table with passport_id as its primary key
+CREATE TABLE Passport (
+  passport_id SERIAL PRIMARY KEY,
+  passport_number VARCHAR(20),
+  country VARCHAR(20),
+  person_id INT UNIQUE,  -- Unique foreign key constraint for 1-to-1 relationship
+  FOREIGN KEY (person_id) REFERENCES Person(person_id)
+);
+`
+
+
+export const EXAMPLE_SCRIPT: IScript = {
+    id: "1",
+    title: "Large Example Script",
+    text: EXAMPLE_SQL,
+    created_at: Date.now().toString(),
+    updated_at: Date.now().toString(),
+}
+
+export const EXAMPLE_SCRIPT_1_1: IScript = {
+    id: "2",
+    title: "Example Script (1 to 1)",
+    text: EXAMPLE_SQL_2,
+    created_at: Date.now().toString(),
+    updated_at: Date.now().toString(),
+}

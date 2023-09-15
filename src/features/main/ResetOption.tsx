@@ -1,7 +1,7 @@
 
 
 import { useDispatch } from "react-redux/es/exports";
-import { resetCodeText } from '../../store/codeTextSlice';
+import { resetSelectedScript } from '../../store/scriptSlice';
 
 import { IconTrash } from '@tabler/icons-react';
 import Modal from "../../components/Modal";
@@ -15,7 +15,7 @@ const ResetOption = ({ extraClasses }: IResetOptionProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const dispatch = useDispatch();
     const handleReset = () => {
-        dispatch(resetCodeText());
+        dispatch(resetSelectedScript());
         setIsModalOpen(false);
     }
     return (

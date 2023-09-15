@@ -7,11 +7,12 @@ import SideBar from './features/main/SideBar';
 import ShareOption from './features/main/ShareOption';
 import { fromUrlSafeB64 } from './helpers/urlGenerators';
 import { useDispatch } from 'react-redux';
-import { setCodeText } from './store/codeTextSlice';
+import { setSelectedScript } from './store/scriptSlice';
 import ResetOption from './features/main/ResetOption';
 import SettingsOption from './features/main/SettingsOption';
 import ImportSqlOption from './features/main/ImportSQLOption';
 import ExportSqlOption from './features/main/ExportSQLOption';
+import { IScript } from './types';
 
 function App() {
 
@@ -29,7 +30,9 @@ function App() {
       const code = params.get("code")!;
       const decoded = fromUrlSafeB64(code);
       if (!decoded) return;
-      dispatch(setCodeText(decoded));
+
+      const script: IScript = JSON.parse(decoded);
+      dispatch(setSelectedScript(script));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -41,7 +44,7 @@ function App() {
         <SideBar>
           <button title='Show/Hide Text Editor' onClick={toggleSideBar} className=' z-20 bg-zinc-900 hover:bg-zinc-800 p-2 h-12 text-white '>
             {
-              isSideBarOpen ? (<IconArrowLeft  stroke='white' size={20} strokeWidth={2}/>) : (<IconArrowRight stroke='white' size={20} strokeWidth={2}/>)
+              isSideBarOpen ? (<IconArrowLeft stroke='white' size={20} strokeWidth={2} />) : (<IconArrowRight stroke='white' size={20} strokeWidth={2} />)
             }
           </button>
 

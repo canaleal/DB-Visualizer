@@ -13,10 +13,11 @@ const ExportSqlOption = ({ extraClasses }: IExportSqlOptionProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [fileName, setFileName] = useState("db_visualizer_export");
     const [fileType] = useState("sql"); // ["sql", "json"]
-    const codeText = useSelector((state: RootState) => state.codeText.codeText);
+    const selectedScript = useSelector((state: RootState) => state.script.selectedScript);
 
     const handleExport = () => {
-        const blob = new Blob([codeText], { type: "text/plain;charset=utf-8" });
+        if(!selectedScript) return;
+        const blob = new Blob([selectedScript.text], { type: "text/plain;charset=utf-8" });
         const href = URL.createObjectURL(blob);
 
         const link = document.createElement("a");
