@@ -21,13 +21,6 @@ const TextEditor = () => {
         monaco.editor.setTheme('monokai');
     }
 
-    function handleSelectionChange(event: React.ChangeEvent<HTMLSelectElement>) {
-
-        const selectedScript = scripts.find((script) => script.id === event.target.value);
-        if (selectedScript) {
-            dispatch(setSelectedScript(selectedScript));
-        }
-    }
 
     return (
 
