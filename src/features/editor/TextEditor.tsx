@@ -33,18 +33,6 @@ const TextEditor = () => {
 
         <>
 
-            <div className="flex flex-col w-full bg-zinc-800">
-                <select className="bg-zinc-800 w-full text-white px-4 py-2 " onChange={handleSelectionChange}>
-                    {
-                        scripts.map((script) => (
-                            <option key={script.id} value={script.id}>{script.title}</option>
-                        ))
-                    }
-                </select>
-
-                <div className='py-0.5 bg-indigo-900'></div>
-            </div>
-
             <Editor
                 height="100%"
                 theme={theme}
