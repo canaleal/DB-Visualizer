@@ -16,18 +16,22 @@ const ExportSqlOption = ({ extraClasses }: IExportSqlOptionProps) => {
     const selectedScript = useSelector((state: RootState) => state.script.selectedScript);
 
     const handleExport = () => {
-        if(!selectedScript) return;
-        const blob = new Blob([selectedScript.text], { type: "text/plain;charset=utf-8" });
-        const href = URL.createObjectURL(blob);
+        if (!selectedScript) return;
+        try {
+            const blob = new Blob([selectedScript.text], { type: "text/plain;charset=utf-8" });
+            const href = URL.createObjectURL(blob);
 
-        const link = document.createElement("a");
-        link.href = href;
-        link.download = `${fileName}.${fileType}`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+            const link = document.createElement("a");
+            link.href = href;
+            link.download = `${fileName}.${fileType}`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
 
-        setIsModalOpen(false);
+            setIsModalOpen(false);
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     return (

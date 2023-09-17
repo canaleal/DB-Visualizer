@@ -4,6 +4,7 @@ import { IconUpload } from '@tabler/icons-react';
 import { useDispatch } from 'react-redux';
 import { setSelectedScript } from '../../store/scriptSlice';
 import { IScript } from '../../types';
+import { v4 as uuidv4 } from 'uuid';
 
 interface IImportSqlOptionProps {
     extraClasses?: string;
@@ -25,20 +26,22 @@ const ImportSqlOption = ({ extraClasses }: IImportSqlOptionProps) => {
     }
 
     const acceptImport = () => {
-
         if (!sqlFileContent) return;
-        //todo : Add a check to see if the file is a valid sql file
-        //Create new script object
-        const script : IScript = {
-            id: Math.random().toString(36).substr(2, 9),
-            title: "Imported SQL File",
-            text: sqlFileContent,
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString(),
+        try{
+            const script : IScript = {
+                id: uuidv4(),
+                title: "Imported SQL File",
+                text: sqlFileContent,
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString(),
+            }
+            dispatch(setSelectedScript(script));
+            setSqlFileContent(null);
+            setIsModalOpen(false);
+        } catch(e) {
+            console.error(e);
         }
-        dispatch(setSelectedScript(script));
-        setSqlFileContent(null);
-        setIsModalOpen(false);
+      
     }
 
     const cancelImport = () => {

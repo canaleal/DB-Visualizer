@@ -14,12 +14,16 @@ const ShareOption = ({ extraClasses }: IShareOptionProps) => {
     const selectedScript = useSelector((state: RootState) => state.script.selectedScript);
 
     const createCopyLink = async () => {
-        if(!selectedScript) return;
-        const params = new URLSearchParams({ code: toUrlSafeB64(JSON.stringify(selectedScript)) });
-        const toCopy = `${location.origin}?${params.toString()}`;
-        await navigator.clipboard.writeText(toCopy);
-
-        setIsModalOpen(false);
+        if (!selectedScript) return;
+        try {
+            const params = new URLSearchParams({ code: toUrlSafeB64(JSON.stringify(selectedScript)) });
+            const toCopy = `${location.origin}?${params.toString()}`;
+            await navigator.clipboard.writeText(toCopy);
+            setIsModalOpen(false);
+        } catch (e) {
+            console.error(e);
+        }
+        
     };
 
     return (

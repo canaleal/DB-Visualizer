@@ -15,8 +15,12 @@ const ResetOption = ({ extraClasses }: IResetOptionProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const dispatch = useDispatch();
     const handleReset = () => {
-        dispatch(resetSelectedScript());
-        setIsModalOpen(false);
+        try {
+            dispatch(resetSelectedScript());
+            setIsModalOpen(false);
+        } catch (e) {
+            console.error(e);
+        }
     }
     return (
         <>

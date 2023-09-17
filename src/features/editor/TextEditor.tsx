@@ -7,23 +7,20 @@ import monokai from './themes/monokai.json';
 
 const TextEditor = () => {
 
-    const scripts = useSelector((state: RootState) => state.script.scripts);
+    // const scripts = useSelector((state: RootState) => state.script.scripts);
     const selectedScript = useSelector((state: RootState) => state.script.selectedScript);
     const theme = useSelector((state: RootState) => state.textEditor.theme);
     const language = useSelector((state: RootState) => state.textEditor.language);
     const dispatch = useDispatch();
 
-    console.log(scripts);
-
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function handleEditorWillMount(monaco: any) {
+        if(!monaco || !monokai) return;
         monaco.editor.defineTheme('monokai', monokai);
         monaco.editor.setTheme('monokai');
     }
 
-
     return (
-
         <>
 
             <Editor
