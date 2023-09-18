@@ -23,17 +23,23 @@ function App() {
     setIsSideBarOpen(!isSideBarOpen);
   }
 
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-
-    if (params.has("code")) {
-      const code = params.get("code")!;
-      const decoded = fromUrlSafeB64(code);
-      if (!decoded) return;
-
-      const script: IScript = JSON.parse(decoded);
-      dispatch(setSelectedScript(script));
+  const decodeUrl = () => {
+    try {
+      const params = new URLSearchParams(location.search);
+      if (params.has("code")) {
+        const decoded = fromUrlSafeB64(params.get("code")!);
+        if (!decoded) return;
+        const script: IScript = JSON.parse(decoded);
+        dispatch(setSelectedScript(script));
+      }
+    } catch (e) {
+      console.error(e);
     }
+  }
+
+  useEffect(() => {
+    decodeUrl();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

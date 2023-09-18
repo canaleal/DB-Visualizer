@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { EXAMPLE_SCRIPT, EXAMPLE_SCRIPT_1_1 } from './init';
 import { IScript } from '../types';
 
-// Define IScript interface
 
 const scriptsFromLocalStorage = localStorage.getItem("codeText") !== null ? JSON.parse(localStorage.getItem("codeText")!) : [EXAMPLE_SCRIPT, EXAMPLE_SCRIPT_1_1];
 

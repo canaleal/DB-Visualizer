@@ -43,10 +43,7 @@ const DiagramStyleOption = () => {
 
     const handleReset = () => {
         dispatch(resetAllThemes());
-        handleStyleMenuToggle();
     }
-
- 
 
     return (
         <Panel position="top-left" className='flex flex-row gap-2'>
@@ -91,7 +88,7 @@ const DiagramStyleOption = () => {
                                     Do not Reset Styles
                                 </button>
 
-                                <button title="Reset Diagram Style" className={`flex gap-1 bg-indigo-900 hover:bg-indigo-800 p-2  rounded-md text-white `} onClick={() => { handleReset(); }}>
+                                <button title="Reset Diagram Style" className={`flex gap-1 bg-indigo-900 hover:bg-indigo-800 p-2  rounded-md text-white `} onClick={() => { handleReset(); handleStyleMenuToggle();}}>
                                     <IconTrash stroke='white' size={20} strokeWidth={2} className='my-auto' />
                                     Reset Diagram Styles
                                 </button>

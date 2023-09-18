@@ -1,5 +1,3 @@
-
-
 interface ISideBarProps {
     extraClasses?: string
     children?: React.ReactNode

@@ -6,8 +6,6 @@ interface IModalProps {
 }
 
 const Modal = ({ isOpen, handleClose, children }: IModalProps) => {
-
-
     return (
         <>  {isOpen && (
             <div className='fixed flex  z-[50] h-full w-full'>
